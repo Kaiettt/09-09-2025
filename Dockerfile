@@ -5,7 +5,7 @@ FROM tomcat:9.0-jdk11
 RUN rm -rf /usr/local/tomcat/webapps/*
 
 # Copy your WAR to Tomcat webapps folder (context path will be /email_list)
-COPY target/email_list.war /usr/local/tomcat/webapps/email_list.war
+COPY target/ecommerce.war /usr/local/tomcat/webapps/ecommerce.war
 
 # Expose Tomcat port
 EXPOSE 8080
