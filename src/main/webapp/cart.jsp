@@ -32,6 +32,26 @@
                     padding: 5px 10px;
                     margin-left: 5px;
                 }
+
+                .continue-link {
+                    margin: 20px 0;
+                }
+
+                .continue-link a {
+                    text-decoration: none;
+                    color: #007BFF;
+                    /* Blue link color */
+                    font-weight: bold;
+                    padding: 8px 16px;
+                    border: 2px solid #007BFF;
+                    border-radius: 5px;
+                    transition: all 0.3s ease;
+                }
+
+                .continue-link a:hover {
+                    background-color: #007BFF;
+                    color: white;
+                }
             </style>
         </head>
 
@@ -74,6 +94,10 @@
                     </table>
                 </form>
             </c:if>
+            <div class="continue-link">
+                <a href="<%= request.getContextPath() %>/product">Continue Shopping</a>
+            </div>
+
 
         </body>
 

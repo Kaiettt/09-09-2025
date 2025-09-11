@@ -61,6 +61,24 @@
                     margin-bottom: 15px;
                     display: inline-block;
                 }
+
+                .cart-link {
+                    margin: 20px;
+                }
+
+                .cart-link a {
+                    text-decoration: none;
+                    color: white;
+                    background-color: #007BFF;
+                    /* Bootstrap primary blue */
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    transition: background-color 0.3s ease;
+                }
+
+                .cart-link a:hover {
+                    background-color: #0056b3;
+                }
             </style>
         </head>
 
@@ -97,6 +115,10 @@
                     </c:forEach>
                 </tbody>
             </table>
+            <div class="cart-link">
+                <a href="<%= request.getContextPath() %>/cart">Cart</a>
+            </div>
+
         </body>
 
         </html>
