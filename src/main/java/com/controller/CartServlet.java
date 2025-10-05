@@ -58,8 +58,23 @@ public class CartServlet extends HttpServlet {
                 session.setAttribute("cart", cart);
             }
             int productId = Integer.parseInt(id);
-            cart.removeProduct(productId);
-            response.sendRedirect(request.getContextPath() + "/cart");
+        // try to find product name for a friendly message
+        String removedName = null;
+        if (cart.getItems() != null) {
+          for (com.model.CartItem item : cart.getItems()) {
+            if (item.getProduct().getId() == productId) {
+              removedName = item.getProduct().getName();
+              break;
+            }
+          }
+        }
+        cart.removeProduct(productId);
+        if (removedName != null) {
+          session.setAttribute("successMessage", "Removed '" + removedName + "' from cart");
+        } else {
+          session.setAttribute("successMessage", "Removed product from cart");
+        }
+        response.sendRedirect(request.getContextPath() + "/cart");
     }
       private void handleUpdateCart(HttpServletRequest request, HttpServletResponse response,String id) throws IOException {
         HttpSession session = request.getSession();
@@ -69,9 +84,24 @@ public class CartServlet extends HttpServlet {
                 session.setAttribute("cart", cart);
             }
             int productId = Integer.parseInt(id);
-            int quantity = Integer.parseInt(request.getParameter("quantity_" + productId));
-            cart.updateQuantity(productId, quantity);
-            response.sendRedirect(request.getContextPath() + "/cart");
+        int quantity = Integer.parseInt(request.getParameter("quantity_" + productId));
+        // try to find product name for message
+        String updatedName = null;
+        if (cart.getItems() != null) {
+          for (com.model.CartItem item : cart.getItems()) {
+            if (item.getProduct().getId() == productId) {
+              updatedName = item.getProduct().getName();
+              break;
+            }
+          }
+        }
+        cart.updateQuantity(productId, quantity);
+        if (updatedName != null) {
+          session.setAttribute("successMessage", "Updated quantity for '" + updatedName + "' to " + quantity);
+        } else {
+          session.setAttribute("successMessage", "Updated product quantity");
+        }
+        response.sendRedirect(request.getContextPath() + "/cart");
     }
       private void handleAddToCart(HttpServletRequest request, HttpServletResponse response) throws IOException {
             int productId = Integer.parseInt(request.getParameter("productId"));
@@ -86,6 +116,8 @@ public class CartServlet extends HttpServlet {
                 session.setAttribute("cart", cart);
             }
             cart.addProduct(product);
-            response.sendRedirect(request.getContextPath() + "/product");
+        // set a session-level success message so it survives the redirect
+        session.setAttribute("successMessage", "Added '" + productName + "' to cart");
+        response.sendRedirect(request.getContextPath() + "/product");
       }
 }

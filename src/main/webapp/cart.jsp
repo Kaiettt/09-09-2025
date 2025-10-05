@@ -102,6 +102,19 @@
         <body>
 
             <h1>Your Cart</h1>
+            <!-- show popup from session (set by CartServlet) -->
+            <c:if test="${not empty sessionScope.successMessage}">
+                <div id="popup"
+                    style="max-width:700px;margin:0 auto;background:#d4edda;color:#155724;padding:12px 18px;border-radius:6px;font-weight:bold;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+                    ${sessionScope.successMessage}</div>
+                <script>
+                    setTimeout(function () {
+                        var p = document.getElementById('popup');
+                        if (p) p.style.display = 'none';
+                    }, 2500);
+                </script>
+                <% request.getSession().removeAttribute("successMessage"); %>
+            </c:if>
             <c:if test="${not empty cart.items}">
                 <form action="cart" method="post">
                     <table>

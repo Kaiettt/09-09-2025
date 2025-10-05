@@ -109,8 +109,18 @@
                 <h1>Product List</h1>
 
                 <!-- Thông báo thêm sản phẩm thành công -->
-                <c:if test="${not empty successMessage}">
-                    <div class="success-msg">${successMessage}</div>
+                <!-- show popup from session (set by CartServlet) -->
+                <c:if test="${not empty sessionScope.successMessage}">
+                    <div id="popup" class="success-msg">${sessionScope.successMessage}</div>
+                    <script>
+                        // hide after 2.5s and remove element
+                        setTimeout(function () {
+                            var p = document.getElementById('popup');
+                            if (p) p.style.display = 'none';
+                        }, 2500);
+                    </script>
+                    <%-- remove from session so it doesn't show again after refresh --%>
+                        <% request.getSession().removeAttribute("successMessage"); %>
                 </c:if>
 
                 <table>
